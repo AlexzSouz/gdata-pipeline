@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  
+  "title": "Error message",
+  "description": "Schema for async error messages.",
+  "type": "object",
+  
+  "properties": {
+    "type": {
+      "title": "Message type",
+      "description": "Object message type used for serialization and deserialization.",
+      "type": "string"
+    },
+    "customer_reference": {
+      "title": "Customer reference",
+      "description": "Soft reference to customer.",
+      "type": "string"
+    },
+    "order_reference": {
+      "title": "Order reference",
+      "description": "Soft reference to order.",
+      "type": "string"
+    },
+    "message": {
+      "title": "Message",
+      "description": "Human readable error message for incident management.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "customer_reference",
+    "order_reference",
+    "message"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    
+    "title": "Envelope message",
+    "description": "Schema for async core envelope messages.",
+    "type": "object",
+
+    "properties": {
+        "header": {
+            "$ref": "/schemas/header"
+        },
+        "payload": {
+            "$ref": "/schemas/customers"
+        }
+    },
+    "required": [
+        "header",
+        "payload"
+    ]
+}

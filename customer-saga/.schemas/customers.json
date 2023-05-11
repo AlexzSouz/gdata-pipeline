@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  
+  "title": "Customer orders message",
+  "description": "Schema for async messages regarding customers' orders.",
+  "type": "object",
+  
+  "properties": {
+    "type": {
+      "title": "Message type",
+      "description": "Object message type used for serialization and deserialization.",
+      "type": "string"
+    },
+    "customer_reference": {
+      "title": "Customer reference",
+      "description": "Soft reference to customer.",
+      "type": "string"
+    },
+    "number_of_orders": {
+      "title": "Total orders",
+      "description": "The total numbers of orders for customer reference.",
+      "type": "integer"
+    },
+    "total_amount_spent": {
+      "title": "Total order",
+      "description": "Sum of order totals.",
+      "type": "number"
+    }
+  },
+  "required": [
+    "type",
+    "customer_reference",
+    "number_of_orders",
+    "total_amount_spent"
+  ]
+}

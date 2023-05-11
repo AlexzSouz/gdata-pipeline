@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+
+  gdata.messages.svc:
+    image: bitnami/rabbitmq:latest
+
+  gdata.pipeline.svc:
+    image: ${REPOSITORY}gdata-pipeline-svc:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: ./customer-saga/Dockerfile
+      target: runtime
+      args:
+        version: ${VERSION:-0.0.1}
