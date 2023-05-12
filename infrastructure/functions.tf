@@ -20,34 +20,24 @@ data "aws_security_groups" "security_groups" {
   }
 }
 
-# output "vpc_subnets" {
-#   description = "Subnets"
-#   value       = data.aws_security_groups.security_groups
-
-#   depends_on = [
-#     module.vpc,
-#     data.aws_security_groups.security_groups
-#   ]
-# }
-
 resource "aws_lambda_function" "crio_functions" {
   for_each = var.crio_functions
 
   function_name = each.value.name
   description   = each.value.description
-  role          = aws_iam_role.gdata_lambda_role.arn
+  role          = aws_iam_role.gdata_lambda_role.arn # aws_iam_role.role.arn
 
   # image_uri = "${var.registry_uri}/${each.value.image_name}:${each.value.image_tag}"
-
   # s3_bucket = var.gdata_bucket_name # TODO : Verify Bucket
   # s3_key    = "gdata-fx.zip"
 
-  filename = ""
-  handler = "s3_sample"
+  filename = "../functions/helloworld.fx.zip"
+  runtime  = "go1.x"
+  handler  = "main"
 
   vpc_config {
-    subnet_ids         = [data.aws_subnets.subnets.ids]
-    security_group_ids = [data.aws_security_groups.security_groups.ids]
+    subnet_ids         = toset(data.aws_subnets.subnets.ids)
+    security_group_ids = toset(data.aws_security_groups.security_groups.ids)
   }
 
   tags = each.value.tags

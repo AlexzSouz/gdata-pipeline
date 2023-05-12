@@ -12,16 +12,18 @@ import (
 type ICustomer interface {
 	AddOrder(order entities.Order)
 	AddLineItemToOrder(orderReference string, lineItem entities.LineItem)
+	// CalculateOrderTotal() float32
 }
 
 // Customer Aggregate struct following DDD pratices
 type Customer struct {
 	Aggregate
-	FirstName string                    `json:"first_name"`
-	LastName  string                    `json:"last_name"`
-	Reference string                    `json:"customer_reference"`
-	Status    enums.CustomerStatus      `json:"status"`
-	Orders    map[string]entities.Order `json:"orders"`
+	FirstName   string
+	LastName    string
+	Reference   string
+	Status      enums.CustomerStatus
+	Orders      map[string]entities.Order
+	AmountSpent float32
 }
 
 func (c *Customer) AddOrder(order entities.Order) {
@@ -62,6 +64,7 @@ func (c *Customer) AddLineItemToOrder(orderReference string, lineItem entities.L
 	}
 
 	items[lineItem.Id] = lineItem
+	c.AmountSpent += lineItem.Price
 
 	// Raising domain events. For Event-Sourcing architecture
 	c.Raise(events.ItemAddedToOrder{

@@ -22,10 +22,14 @@ type App struct {
 }
 
 func Create() IApp {
+	return CreateWithContext(context.Background())
+}
+
+func CreateWithContext(ctx context.Context) IApp {
 	logger := log.New(os.Stdout, "", 0)
 
 	tracer := otel.Tracer("app-tracer")
-	ctx, span := tracer.Start(context.Background(), "app-spanner")
+	ctx, span := tracer.Start(ctx, "app-spanner")
 	ctx = context.WithValue(ctx, "logger", logger)
 	ctx = context.WithValue(ctx, "span", span)
 

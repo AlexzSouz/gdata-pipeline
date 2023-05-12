@@ -10,6 +10,8 @@ import (
 type IAppContext interface {
 	CreateSpan(ref string) (*AppContext, trace.Span)
 	Logger() *log.Logger
+	GetTraceId() string
+	GetSpanId() string
 	Wait()
 	Terminate()
 }
@@ -39,6 +41,14 @@ func (w *AppContext) CreateSpan(ref string) (*AppContext, trace.Span) {
 
 func (w *AppContext) Logger() *log.Logger {
 	return w.Context.Value("logger").(*log.Logger)
+}
+
+func (w *AppContext) GetTraceId() string {
+	return w.span.SpanContext().TraceID().String()
+}
+
+func (w *AppContext) GetSpanId() string {
+	return w.span.SpanContext().SpanID().String()
 }
 
 func (w *AppContext) Wait() {

@@ -11,7 +11,9 @@ data "aws_iam_policy_document" "gdata_assume_role" {
       identifiers = ["lambda.amazonaws.com"]
     }
 
-    actions = ["sts:AssumeRole"]
+    actions = [
+      "sts:AssumeRole",
+    ]
   }
 }
 
@@ -20,14 +22,19 @@ resource "aws_iam_role" "gdata_lambda_role" {
   assume_role_policy = data.aws_iam_policy_document.gdata_assume_role.json
 }
 
-resource "aws_iam_role_policy_attachment" "gdata_lambda_basic_policy" {
+resource "aws_iam_role_policy_attachment" "gdata_lambda_basicexecution_policy" {
   role       = aws_iam_role.gdata_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-resource "aws_iam_role_policy_attachment" "gdata_lambda_basic_policy" {
+resource "aws_iam_role_policy_attachment" "gdata_lambda_s3execution_policy" {
   role       = aws_iam_role.gdata_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonS3ObjectLambdaExecutionRolePolicy"
+}
+
+resource "aws_iam_role_policy_attachment" "AWSLambdaVPCAccessExecutionRole" {
+  role       = aws_iam_role.gdata_lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
 #

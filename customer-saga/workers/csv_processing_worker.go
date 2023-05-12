@@ -1,8 +1,8 @@
 package workers
 
 import (
+	"fmt"
 	"os"
-	"reflect"
 
 	"github.com/gdata/customer-saga/abstractions"
 	"github.com/gdata/customer-saga/watchers"
@@ -13,8 +13,8 @@ type CsvProcessingWorker struct {
 }
 
 func (w *CsvProcessingWorker) ExecuteWithContext(ctx abstractions.IAppContext) {
-	workerType := reflect.TypeOf(w).Name()
-	_, span := ctx.CreateSpan(workerType)
+	workerType := fmt.Sprintf("%T", w)
+	ctx, span := ctx.CreateSpan(workerType)
 	defer span.End()
 
 	defer func() {

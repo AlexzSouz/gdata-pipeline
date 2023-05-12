@@ -1,16 +1,18 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/gdata/customer-saga/workers"
 )
 
-func main() {
-	// Temp initializations
-	os.Setenv("APP_WATCH_PATH", "/mnt/c/Projects/.samples/GData-Pipeline/customer-saga/.files/")
+func init() {
+	dir, _ := os.Getwd()
+	os.Setenv("APP_WATCH_PATH", fmt.Sprintf("%v/%v", dir, ".files/")) // "/mnt/c/Projects/.samples/GData-Pipeline/customer-saga/.files/"
+}
 
-	// Startup
+func main() {
 	Create().
 		RegisterWorker(workers.CreateWorkerFactory[*workers.CsvProcessingWorker]()).
 		Run()

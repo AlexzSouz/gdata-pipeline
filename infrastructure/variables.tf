@@ -54,7 +54,7 @@ variable "gdata_bucket_name" {
 #
 variable "crio_functions" {
   description = "Lambda CRI-O functions"
-  type = list(object({
+  type = map(object({
     name        = string
     description = string
     image_name  = string
