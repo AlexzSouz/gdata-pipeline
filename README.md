@@ -8,7 +8,7 @@ This repository contains IaC to deploy AWS resources, a blank lambda function an
 
 For more details in how to execute the IaC to provision AWS resources, please visit the [Infrastructure](./infrastructure/README.md) documentation.
 
-**Resources Provisioned:**
+**Resources:**
 
 - S3 Bucket
 - VPC
